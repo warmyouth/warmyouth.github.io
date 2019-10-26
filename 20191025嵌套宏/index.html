@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌套宏">
+<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;20191025%E5%B5%8C%E5%A5%97%E5%AE%8F&#x2F;index.html">
+<meta property="og:site_name" content="warmyouth blog">
+<meta property="og:description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-26T16:18:26.912Z">
+<meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>嵌套宏 | warmyouth blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150932253-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-150932253-1');
+      }
+    </script>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5df811d84b73029ff07afde897c4b2ad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">warmyouth blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+          <i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="warmyouth">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="warmyouth blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            嵌套宏
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-25 21:40:52" itemprop="dateCreated datePublished" datetime="2019-10-25T21:40:52+08:00">2019-10-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-27 00:18:26" itemprop="dateModified" datetime="2019-10-27T00:18:26+08:00">2019-10-27</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在某些头文件上看到了宏的以下用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define STRINGIZE2(x) #x</span><br><span class="line">#define STRINGIZE(x) STRINGIZE2(x)</span><br><span class="line">#define FILE_LINE &quot;/&quot; __FILE__ &quot;:&quot; STRINGIZE(__LINE__)</span><br></pre></td></tr></table></figure>
+<p>这涉及到了C对于宏的一些规定。</p>
+<p>由于<code>STRINGIZE</code>和<code>__LINE__</code>都是宏定义，<code>STRINGIZE(__LINE__)</code>就相当于嵌套宏。<br>嵌套宏类似于复合函数。复合函数的执行顺序是定义好的，程序语言和数学语言上表现一致，都是由内向外计算。<br>但嵌套宏的内外替换可以有先后顺序，C对嵌套宏的定义规则为：</p>
+<ol>
+<li>总体而言，嵌套宏由内向外进行替换，即先展开宏参数（内部宏），再以递归的方式检查和替换已经展开的结果；</li>
+<li>但如果在展开宏参数的过程中，发现某个宏参数遇到了#或##，那么就不再展开这个宏参数，而是直接应用#或##，没遇到#或##的宏参数仍旧按照规则1处理。</li>
+</ol>
+<p>即，When macro arguments are substituted into the macro body, they are expanded unless they appear with the # or ## preprocessor operators in that macro.</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">TEST(Draft, Macro1) &#123;</span><br><span class="line">  #define f(a) (#a)</span><br><span class="line">  #define g()  1000</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;f(g()) macro: &quot; &lt;&lt; f(g());</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void call(const string &amp;j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 1: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">static void call(int j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 2: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">TEST(Draft, Macro2) &#123;</span><br><span class="line">  #define f(a, b) a##b</span><br><span class="line">  #define g(a) #a, f(a, 0)</span><br><span class="line">  #define h(a) func_##a, f(a, 0)</span><br><span class="line">  #define e(a) a</span><br><span class="line">  const auto func_e = [](int i) -&gt; int &#123;</span><br><span class="line">    LOG(INFO) &lt;&lt; &quot;func_e: i = &quot; &lt;&lt; i;</span><br><span class="line">    return i*i;</span><br><span class="line">  &#125;;</span><br><span class="line">  call(g(e(3)));</span><br><span class="line">  call(h(e(3)));</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">  #undef h</span><br><span class="line">  #undef e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ RUN      ] Draft.Macro1</span><br><span class="line">W1026 23:46:21.270776  6529 test_draft.cpp:13] f(g()) macro: g()</span><br><span class="line">[       OK ] Draft.Macro1 (0 ms)</span><br><span class="line">[ RUN      ] Draft.Macro2</span><br><span class="line">W1026 23:46:21.270790  6529 test_draft.cpp:19] version 1: e(3) 30</span><br><span class="line">I1026 23:46:21.270797  6529 test_draft.cpp:30] func_e: i = 3</span><br><span class="line">W1026 23:46:21.270800  6529 test_draft.cpp:22] version 2: 9 30</span><br><span class="line">[       OK ] Draft.Macro2 (0 ms)</span><br></pre></td></tr></table></figure>
+<p>分析：<br>Macro1例子：<br>f(g())中f是宏定义，但f定义中有#，所以不展开#对应的参数，即<br><code>f(g()) -&gt; #g() -&gt; &quot;g()&quot;</code><br>Macro2例子：<br>g(e(3))中g是宏定义，但g定义中有#，所以不展开#对应的参数，即<br><code>g(e(3)) -&gt; #e(3), f(3, 0) -&gt; &quot;e(3)&quot;, 30</code><br>于是传入call得到call(“e(3)”, 30)。<br>h(e(3))中h是宏定义，但h定义中有##，所以不展开##对应的参数，即<br><code>h(e(3)) -&gt; func_##e(3), f(3, 0) -&gt; func_e(3), 30</code><br>于是传入call得到call(func_e(3), 30)。</p>
+<p><strong>重要</strong><br>可以用<code>gcc -E test.cpp</code>查看经过宏替换之后的源代码。比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define f(a, b) a##b</span><br><span class="line">#define g(a, b) 1##a + f(b, 0)</span><br><span class="line">#define c       4</span><br><span class="line">#define d       8</span><br><span class="line">g(c, d)</span><br></pre></td></tr></table></figure>
+<p>经过<code>gcc -E test_draft.cpp</code>得到了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"># 1 &quot;&lt;built-in&gt;&quot;</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot;</span><br><span class="line"># 1 &quot;/usr/include/stdc-predef.h&quot; 1 3 4</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot; 2</span><br><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"></span><br><span class="line">1c + 80</span><br></pre></td></tr></table></figure>
+<p>可见过程为<br><code>g(c, d) -&gt; 1##c + f(8, 0) -&gt; 1c + 80</code><br><del>而不是<br><code>g(c, d) -&gt; 1##c + d##0 -&gt; 1c + d0</code></del></p>
+<p><a href="https://www.jianshu.com/p/4a1531bac39f" target="_blank" rel="noopener">相关参考</a></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/C/" rel="tag"># C++</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/20191025hexo%E7%AE%80%E4%BB%8B/" rel="next" title="hexo简介">
+                  <i class="fa fa-chevron-left"></i> hexo简介
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.gif"
+      alt="warmyouth">
+  <p class="site-author-name" itemprop="name">warmyouth</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/warmyouth" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;warmyouth" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:warmyouth@gmail.com" title="E-Mail &amp;rarr; mailto:warmyouth@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">warmyouth</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66480981";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/muse.js?v=7.4.2"></script>
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.2"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'eea08948e3e62a304848',
+      clientSecret: '37178e26cd6713b96dc6feb91a4e92b661fe5adf',
+      repo: 'gitalk-comments',
+      owner: 'warmyouth',
+      admin: ['warmyouth'],
+      id: '38cc8352a9325856259b9c557c5e84f8',
+        language: window.navigator.language || window.navigator.userLanguage,
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+</body>
+</html>

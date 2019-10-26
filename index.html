@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="en">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="warmyouth blog">
+<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;index.html">
+<meta property="og:site_name" content="warmyouth blog">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://blog.liveyu.wang/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>warmyouth blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150932253-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-150932253-1');
+      }
+    </script>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5df811d84b73029ff07afde897c4b2ad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">warmyouth blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+      
+    
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">
+          <i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="Searching..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="warmyouth">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="warmyouth blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/" class="post-title-link" itemprop="url">嵌套宏</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-25 21:40:52" itemprop="dateCreated datePublished" datetime="2019-10-25T21:40:52+08:00">2019-10-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-27 00:18:26" itemprop="dateModified" datetime="2019-10-27T00:18:26+08:00">2019-10-27</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在某些头文件上看到了宏的以下用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define STRINGIZE2(x) #x</span><br><span class="line">#define STRINGIZE(x) STRINGIZE2(x)</span><br><span class="line">#define FILE_LINE &quot;/&quot; __FILE__ &quot;:&quot; STRINGIZE(__LINE__)</span><br></pre></td></tr></table></figure>
+<p>这涉及到了C对于宏的一些规定。</p>
+<p>由于<code>STRINGIZE</code>和<code>__LINE__</code>都是宏定义，<code>STRINGIZE(__LINE__)</code>就相当于嵌套宏。<br>嵌套宏类似于复合函数。复合函数的执行顺序是定义好的，程序语言和数学语言上表现一致，都是由内向外计算。<br>但嵌套宏的内外替换可以有先后顺序，C对嵌套宏的定义规则为：</p>
+<ol>
+<li>总体而言，嵌套宏由内向外进行替换，即先展开宏参数（内部宏），再以递归的方式检查和替换已经展开的结果；</li>
+<li>但如果在展开宏参数的过程中，发现某个宏参数遇到了#或##，那么就不再展开这个宏参数，而是直接应用#或##，没遇到#或##的宏参数仍旧按照规则1处理。</li>
+</ol>
+<p>即，When macro arguments are substituted into the macro body, they are expanded unless they appear with the # or ## preprocessor operators in that macro.</p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">TEST(Draft, Macro1) &#123;</span><br><span class="line">  #define f(a) (#a)</span><br><span class="line">  #define g()  1000</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;f(g()) macro: &quot; &lt;&lt; f(g());</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void call(const string &amp;j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 1: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">static void call(int j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 2: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">TEST(Draft, Macro2) &#123;</span><br><span class="line">  #define f(a, b) a##b</span><br><span class="line">  #define g(a) #a, f(a, 0)</span><br><span class="line">  #define h(a) func_##a, f(a, 0)</span><br><span class="line">  #define e(a) a</span><br><span class="line">  const auto func_e = [](int i) -&gt; int &#123;</span><br><span class="line">    LOG(INFO) &lt;&lt; &quot;func_e: i = &quot; &lt;&lt; i;</span><br><span class="line">    return i*i;</span><br><span class="line">  &#125;;</span><br><span class="line">  call(g(e(3)));</span><br><span class="line">  call(h(e(3)));</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">  #undef h</span><br><span class="line">  #undef e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ RUN      ] Draft.Macro1</span><br><span class="line">W1026 23:46:21.270776  6529 test_draft.cpp:13] f(g()) macro: g()</span><br><span class="line">[       OK ] Draft.Macro1 (0 ms)</span><br><span class="line">[ RUN      ] Draft.Macro2</span><br><span class="line">W1026 23:46:21.270790  6529 test_draft.cpp:19] version 1: e(3) 30</span><br><span class="line">I1026 23:46:21.270797  6529 test_draft.cpp:30] func_e: i = 3</span><br><span class="line">W1026 23:46:21.270800  6529 test_draft.cpp:22] version 2: 9 30</span><br><span class="line">[       OK ] Draft.Macro2 (0 ms)</span><br></pre></td></tr></table></figure>
+<p>分析：<br>Macro1例子：<br>f(g())中f是宏定义，但f定义中有#，所以不展开#对应的参数，即<br><code>f(g()) -&gt; #g() -&gt; &quot;g()&quot;</code><br>Macro2例子：<br>g(e(3))中g是宏定义，但g定义中有#，所以不展开#对应的参数，即<br><code>g(e(3)) -&gt; #e(3), f(3, 0) -&gt; &quot;e(3)&quot;, 30</code><br>于是传入call得到call(“e(3)”, 30)。<br>h(e(3))中h是宏定义，但h定义中有##，所以不展开##对应的参数，即<br><code>h(e(3)) -&gt; func_##e(3), f(3, 0) -&gt; func_e(3), 30</code><br>于是传入call得到call(func_e(3), 30)。</p>
+<p><strong>重要</strong><br>可以用<code>gcc -E test.cpp</code>查看经过宏替换之后的源代码。比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define f(a, b) a##b</span><br><span class="line">#define g(a, b) 1##a + f(b, 0)</span><br><span class="line">#define c       4</span><br><span class="line">#define d       8</span><br><span class="line">g(c, d)</span><br></pre></td></tr></table></figure>
+<p>经过<code>gcc -E test_draft.cpp</code>得到了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"># 1 &quot;&lt;built-in&gt;&quot;</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot;</span><br><span class="line"># 1 &quot;/usr/include/stdc-predef.h&quot; 1 3 4</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot; 2</span><br><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"></span><br><span class="line">1c + 80</span><br></pre></td></tr></table></figure>
+<p>可见过程为<br><code>g(c, d) -&gt; 1##c + f(8, 0) -&gt; 1c + 80</code><br><del>而不是<br><code>g(c, d) -&gt; 1##c + d##0 -&gt; 1c + d0</code></del></p>
+<p><a href="https://www.jianshu.com/p/4a1531bac39f" target="_blank" rel="noopener">相关参考</a></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191025hexo%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="warmyouth">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="warmyouth blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/20191025hexo%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">hexo简介</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-25 15:08:03" itemprop="dateCreated datePublished" datetime="2019-10-25T15:08:03+08:00">2019-10-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-26 12:12:59" itemprop="dateModified" datetime="2019-10-26T12:12:59+08:00">2019-10-26</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>hexo是静态站点生成框架，基于Node.js。用户使用markdown语言写博客，写完后通过hexo将markdown转换成网页，并上传到服务器。因为生成的静态网页可以像代码一样在github上存储，所以一般的做法是结合hexo和github使用，可以省去搭建服务器的麻烦。<br>一般博客上还有一些诸如评论等类似“动态”的内容，这些内容如何在github上存储？这些可以通过插件实现。<br>比如评论可以使用Gitalk插件，其基于Github API开发，Gitalk把博客上的评论转换成对应issue上的问题；或者使用第三方服务实现，比如disqus。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>从官网下载node.js并解压，设置PATH。执行node -v和npm -v查看是否安装成功。<br>安装hexo：<br><code>npm install -g hexo-cli</code><br>升级hexo：<br><code>npm update -g hexo-cli</code></p>
+<p>新建博客目录blog，进入blog目录并初始化：<br><code>hexo init</code><br>接着执行<br><code>npm install</code><br>安装必要的组件。</p>
+<p>此时可以在本地验证hexo是否安装成功：</p>
+<ol>
+<li>执行<code>hexo g</code>生成静态网页；</li>
+<li>执行<code>hexo s</code>打开本地服务器；</li>
+<li>浏览器打开<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a>观看博客。</li>
+</ol>
+<p>此外，hexo相关命令如下：</p>
+<ol>
+<li>新建文章，<code>hexo new &quot;NewBlogName&quot;</code>；</li>
+<li>生成静态网页，<code>hexo generate</code>；</li>
+<li>启动服务器预览静态网页，<code>hexo server</code>；</li>
+<li>推送静态网页，<code>hexo deploy</code>；</li>
+<li>若发现网站有问题，可以考虑清除缓存，<code>hexo clean</code>。</li>
+</ol>
+<h1 id="连接github"><a href="#连接github" class="headerlink" title="连接github"></a>连接github</h1><p>接下来需要建立blog和github的联系。</p>
+<p>申请github账号，配置ssh密钥，创建一个仓库，注意仓库名为<code>用户名.github.io</code>，并设置其为GitHub Pages。</p>
+<p>在根目录下的_config.yml文件中，修改最后deploy项，修改为：<br>deploy:<br>  type: git<br>  repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:YourName/YourName.github.io.git<br>  branch: master<br>其中YourName处填入github用户名。</p>
+<p>安装和git相关的扩展：<br><code>npm i hexo-deployer-git</code></p>
+<p>此时可以验证是否成功连接github：</p>
+<ol>
+<li>执行<code>hexo g</code>生成静态网页；</li>
+<li>执行<code>hexo d</code>将生成的静态网页推送到github上。</li>
+</ol>
+<h1 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h1><p>申请域名（比如mysite.com），添加解析CNAME，将某条主机记录（比如blogpage）设置为YourName.github.io，同样YourName为github用户名。</p>
+<p>登录github，将之前创建的仓库的Settings中的Custom domain设置为域名blogpage.mysite.com。</p>
+<p>在本地blog目录中，进入source子目录，创建名称为CNAME的文件，并填入域名blogpage.mysite.com。</p>
+<p>接着<code>hexo g</code>和<code>hexo d</code>，并在浏览器中打开blogpage.mysite.com即可进入用户博客。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>修改根目录_config.yml中的站点信息，比如title，subtitle之类。<br>修改根目录_config.yml中的post_asset_folder选项，设置为false。这一块内容可以参考<a href="https://hexo.io/zh-cn/docs/asset-folders.html" target="_blank" rel="noopener">文档</a>。<br>下载主题，本文使用next主题。<br><code>git clone https://github.com/theme-next/hexo-theme-next themes/next</code><br>通过git tag显示所有的版本号，通过git checkout切换到最新的稳定版本。<br>将根目录_config.yml中的theme选项改为next。</p>
+<h2 id="添加「标签」页面"><a href="#添加「标签」页面" class="headerlink" title="添加「标签」页面"></a>添加「标签」页面</h2><p>添加「标签」页面，并在菜单中显示「标签」链接。「标签」页面将展示站点的所有标签，若你的所有文章都未包含标签，此页面将是空的。</p>
+<ol>
+<li>执行<br><code>hexo new page tags</code></li>
+<li>编辑刚生成的tags/index.md，将其内的type设置为tags，比如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2019-10-25 15:03:25</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+如何使用标签？以下为包含标签的文章的例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 标签测试文章</span><br><span class="line">tags:</span><br><span class="line">  - 简介</span><br><span class="line">  - 测试</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="添加「分类」页面"><a href="#添加「分类」页面" class="headerlink" title="添加「分类」页面"></a>添加「分类」页面</h2><p>新建「分类」页面，并在菜单中显示「分类」链接。「分类」页面将展示站点的所有分类，若你的所有文章都未包含分类，此页面将是空的。</p>
+<ol>
+<li>执行<br><code>hexo new page categories</code></li>
+<li>编辑刚生成的categories/index.md，将其内的type设置为categories，比如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2019-10-25 15:12:15</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">comments: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+如何使用分类？以下为包含分类的文章的例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: 标签测试文章</span><br><span class="line">categories: 测试</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a>设置主题</h2><p>修改themes/next/_config.yml中的menu项，uncomment其中的tags和categories。<br>搜索Sidebar Avatar，修改头像。<br>搜索Social Links，修改信息。<br>搜索footer，creative_commons，scrollpercent等，修改某些选项。</p>
+<p>使用gitalk评论系统：<br>在<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">github相关页面</a>上注册新应用，其中Homepage URL和Authorization callback URL需要填使用gitalk的博客地址，即填域名blogpage.mysite.com。记录申请到的Client ID和Client Secret。</p>
+<p>申请一个github仓库，比如名为gitalk-comments，其issue将作为gitalk评论使用。</p>
+<p>搜索themes/next/_config.yml中的Multiple Comment System Support，在active中填入gitalk。<br>搜索gitalk选项，设置github_id为Github用户名，repo为刚刚申请的github仓库名gitalk-comments，client_id和client_secret为刚刚申请到的字符串，adminUser为Github用户名。</p>
+<p><strong>注意，为了使用评论，需要作者进入博客主页，点击新发布的文章，拖到底部，授权使用。</strong></p>
+<h2 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h2><p>安装hexo-generator-searchdb，执行：<br><code>npm install hexo-generator-searchdb --save</code></p>
+<p>在根目录的_config.yml中，增加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 100000</span><br></pre></td></tr></table></figure>
+<p>在themes/next/_config.yml中，搜索Local search并使能本地搜索功能。</p>
+<h2 id="LaTeX公式"><a href="#LaTeX公式" class="headerlink" title="LaTeX公式"></a>LaTeX公式</h2><ol>
+<li>执行<br><code>npm install hexo-math --save</code></li>
+<li>在根目录_config.yml中添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">math:</span><br><span class="line">  engine: &apos;mathjax&apos; # or &apos;katex&apos;</span><br><span class="line">  mathjax:</span><br><span class="line">    src: custom_mathjax_source</span><br><span class="line">    config:</span><br><span class="line">      # MathJax config</span><br></pre></td></tr></table></figure></li>
+<li>搜索themes/next/_config.yml中的Math，并配置：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">enable: true</span><br><span class="line"></span><br><span class="line">  # Default (true) will load mathjax / katex script on demand.</span><br><span class="line">  # That is it only render those page which has `mathjax: true` in Front-matter.</span><br><span class="line">  # If you set it to false, it will load mathjax / katex srcipt EVERY PAGE.</span><br><span class="line">  per_page: false</span><br><span class="line"></span><br><span class="line">  # hexo-renderer-pandoc (or hexo-renderer-kramed) required for full MathJax support.</span><br><span class="line">  mathjax:</span><br><span class="line">    enable: true</span><br><span class="line">    # See: https://mhchem.github.io/MathJax-mhchem/</span><br><span class="line">    mhchem: false</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="添加百度统计"><a href="#添加百度统计" class="headerlink" title="添加百度统计"></a>添加百度统计</h2><ol>
+<li>在<a href="https://tongji.baidu.com" target="_blank" rel="noopener">百度统计</a>中申请统计代码，将统计代码中的appid提取出来，填入themes/next/_config.yml中的baidu_analytics项目。</li>
+<li><code>hexo g</code>和<code>hexo d</code>之后，可以用百度统计网站的代码管理模块检查是否安装正确。<br>其他统计可以参考<a href="https://theme-next.org/docs/third-party-services/statistics-and-analytics" target="_blank" rel="noopener">文档</a>。</li>
+</ol>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><ol>
+<li>测试公式：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$ \exp(\pi i) + 1 = 0 $$</span><br></pre></td></tr></table></figure>
+$$ \exp(\pi i) + 1 = 0 $$</li>
+<li>测试图片：<br>在根目录的source中建立images，并放置图片firework.jpg。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![firework](/images/firework.jpg)</span><br></pre></td></tr></table></figure>
+<img src="/images/firework.jpg" alt="firework"></li>
+</ol>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+  </div>
+
+  
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.gif"
+      alt="warmyouth">
+  <p class="site-author-name" itemprop="name">warmyouth</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/warmyouth" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;warmyouth" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:warmyouth@gmail.com" title="E-Mail &amp;rarr; mailto:warmyouth@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">warmyouth</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66480981";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/muse.js?v=7.4.2"></script>
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.2"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+  
+
+  
+
+
+</body>
+</html>
