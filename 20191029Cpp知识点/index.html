@@ -55,17 +55,17 @@
   };
 </script>
 
-  <meta name="description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+  <meta name="description" content="左值和右值左值引用和右值引用的区别：  返回左值引用的函数，连同赋值、下标、解引用、前置递增&#x2F;递减运算符，均生成左值，可以用来绑定左值引用。 返回非引用类型的函数，连同算术、关系、位、后置递增&#x2F;递减运算符，均生成右值，可以用来绑定右值引用，或者const左值引用。 右值引用只能绑定到临时对象，临时对象没有其他用户使用，所以右值引用可以自由接管所引用对象的资源。12int &amp;amp;&amp;amp;k =">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="嵌套宏">
-<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;20191025%E5%B5%8C%E5%A5%97%E5%AE%8F&#x2F;index.html">
+<meta property="og:title" content="C++知识点">
+<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9&#x2F;index.html">
 <meta property="og:site_name" content="warmyouth blog">
-<meta property="og:description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+<meta property="og:description" content="左值和右值左值引用和右值引用的区别：  返回左值引用的函数，连同赋值、下标、解引用、前置递增&#x2F;递减运算符，均生成左值，可以用来绑定左值引用。 返回非引用类型的函数，连同算术、关系、位、后置递增&#x2F;递减运算符，均生成右值，可以用来绑定右值引用，或者const左值引用。 右值引用只能绑定到临时对象，临时对象没有其他用户使用，所以右值引用可以自由接管所引用对象的资源。12int &amp;amp;&amp;amp;k =">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-26T16:19:12.819Z">
+<meta property="og:updated_time" content="2019-10-29T12:59:38.347Z">
 <meta name="twitter:card" content="summary">
-  <link rel="canonical" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+  <link rel="canonical" href="https://blog.liveyu.wang/20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9/">
 
 
 <script id="page-configurations">
@@ -79,7 +79,7 @@
   };
 </script>
 
-  <title>嵌套宏 | warmyouth blog</title>
+  <title>C++知识点 | warmyouth blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150932253-1"></script>
     <script>
@@ -271,7 +271,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="warmyouth">
@@ -285,7 +285,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            嵌套宏
+            C++知识点
             
 
           
@@ -302,19 +302,11 @@
                 
               
 
-              <time title="Created: 2019-10-25 21:40:52" itemprop="dateCreated datePublished" datetime="2019-10-25T21:40:52+08:00">2019-10-25</time>
+              <time title="Created: 2019-10-29 09:44:55 / Modified: 20:59:38" itemprop="dateCreated datePublished" datetime="2019-10-29T09:44:55+08:00">2019-10-29</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-27 00:19:12" itemprop="dateModified" datetime="2019-10-27T00:19:12+08:00">2019-10-27</time>
-              </span>
             
           
 
@@ -329,26 +321,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在某些头文件上看到了宏的以下用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define STRINGIZE2(x) #x</span><br><span class="line">#define STRINGIZE(x) STRINGIZE2(x)</span><br><span class="line">#define FILE_LINE &quot;/&quot; __FILE__ &quot;:&quot; STRINGIZE(__LINE__)</span><br></pre></td></tr></table></figure>
-<p>这涉及到了C对于宏的一些规定。</p>
-<p>由于<code>STRINGIZE</code>和<code>__LINE__</code>都是宏定义，<code>STRINGIZE(__LINE__)</code>就相当于嵌套宏。<br>嵌套宏类似于复合函数。复合函数的执行顺序是定义好的，程序语言和数学语言上表现一致，都是由内向外计算。<br>但嵌套宏的内外替换可以有先后顺序，C对嵌套宏的定义规则为：</p>
+        <h1 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h1><p>左值引用和右值引用的区别：</p>
 <ol>
-<li>总体而言，嵌套宏由内向外进行替换，即先展开宏参数（内部宏），再以递归的方式检查和替换已经展开的结果；</li>
-<li>但如果在展开宏参数的过程中，发现某个宏参数遇到了#或##，那么就不再展开这个宏参数，而是直接应用#或##，没遇到#或##的宏参数仍旧按照规则1处理。</li>
+<li>返回左值引用的函数，连同赋值、下标、解引用、前置递增/递减运算符，均生成<strong>左值</strong>，可以用来绑定左值引用。</li>
+<li>返回非引用类型的函数，连同算术、关系、位、后置递增/递减运算符，均生成<strong>右值</strong>，可以用来绑定<strong>右值引用，或者const左值引用</strong>。</li>
+<li><strong>右值引用只能绑定到临时对象，临时对象没有其他用户使用</strong>，所以右值引用可以自由接管所引用对象的资源。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int &amp;&amp;k = 0;</span><br><span class="line">k += 1;</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-<p>即，When macro arguments are substituted into the macro body, they are expanded unless they appear with the # or ## preprocessor operators in that macro.</p>
-<p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">TEST(Draft, Macro1) &#123;</span><br><span class="line">  #define f(a) (#a)</span><br><span class="line">  #define g()  1000</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;f(g()) macro: &quot; &lt;&lt; f(g());</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void call(const string &amp;j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 1: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">static void call(int j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 2: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">TEST(Draft, Macro2) &#123;</span><br><span class="line">  #define f(a, b) a##b</span><br><span class="line">  #define g(a) #a, f(a, 0)</span><br><span class="line">  #define h(a) func_##a, f(a, 0)</span><br><span class="line">  #define e(a) a</span><br><span class="line">  const auto func_e = [](int i) -&gt; int &#123;</span><br><span class="line">    LOG(INFO) &lt;&lt; &quot;func_e: i = &quot; &lt;&lt; i;</span><br><span class="line">    return i*i;</span><br><span class="line">  &#125;;</span><br><span class="line">  call(g(e(3)));</span><br><span class="line">  call(h(e(3)));</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">  #undef h</span><br><span class="line">  #undef e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ RUN      ] Draft.Macro1</span><br><span class="line">W1026 23:46:21.270776  6529 test_draft.cpp:13] f(g()) macro: g()</span><br><span class="line">[       OK ] Draft.Macro1 (0 ms)</span><br><span class="line">[ RUN      ] Draft.Macro2</span><br><span class="line">W1026 23:46:21.270790  6529 test_draft.cpp:19] version 1: e(3) 30</span><br><span class="line">I1026 23:46:21.270797  6529 test_draft.cpp:30] func_e: i = 3</span><br><span class="line">W1026 23:46:21.270800  6529 test_draft.cpp:22] version 2: 9 30</span><br><span class="line">[       OK ] Draft.Macro2 (0 ms)</span><br></pre></td></tr></table></figure>
-<p>分析：<br>Macro1例子：<br>f(g())中f是宏定义，但f定义中有#，所以不展开#对应的参数，即<br><code>f(g()) -&gt; #g() -&gt; &quot;g()&quot;</code><br>Macro2例子：<br>g(e(3))中g是宏定义，但g定义中有#，所以不展开#对应的参数，即<br><code>g(e(3)) -&gt; #e(3), f(3, 0) -&gt; &quot;e(3)&quot;, 30</code><br>于是传入call得到call(“e(3)”, 30)。<br>h(e(3))中h是宏定义，但h定义中有##，所以不展开##对应的参数，即<br><code>h(e(3)) -&gt; func_##e(3), f(3, 0) -&gt; func_e(3), 30</code><br>于是传入call得到call(func_e(3), 30)。</p>
-<p><strong>重要</strong><br>可以用<code>gcc -E test.cpp</code>查看经过宏替换之后的源代码。比如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define f(a, b) a##b</span><br><span class="line">#define g(a, b) 1##a + f(b, 0)</span><br><span class="line">#define c       4</span><br><span class="line">#define d       8</span><br><span class="line">g(c, d)</span><br></pre></td></tr></table></figure>
-<p>经过<code>gcc -E test_draft.cpp</code>得到了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"># 1 &quot;&lt;built-in&gt;&quot;</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot;</span><br><span class="line"># 1 &quot;/usr/include/stdc-predef.h&quot; 1 3 4</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot; 2</span><br><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"></span><br><span class="line">1c + 80</span><br></pre></td></tr></table></figure>
-<p>可见过程为<br><code>g(c, d) -&gt; 1##c + f(8, 0) -&gt; 1c + 80</code><br><del>而不是<br><code>g(c, d) -&gt; 1##c + d##0 -&gt; 1c + d0</code></del></p>
-<p><a href="https://www.jianshu.com/p/4a1531bac39f" target="_blank" rel="noopener">相关参考</a></p>
+<p>注意：<br>”单纯的变量“的表达式都是左值。即使一个变量a是右值引用类型（比如int &amp;&amp;a），a这个表达式也是左值，因此a不能绑定到右值引用类型上。<br>但可以通过std::move来获得“绑定到左值”的右值引用类型，只需保证不再使用移后源对象（之前的左值）。</p>
+<p>注意：<br>移动ctor和移动=的定义比较困难，有两个原则：</p>
+<ol>
+<li>移动ctor和移动=均不申请新内存，而是接管源对象管理的内存；</li>
+<li>接管后需要设置源对象管理的内存为nullptr，以使其仍旧有效并且能够无感地销毁。</li>
+</ol>
+<p>注意：<br>在模板实参推断时，有两条例外的绑定规则：</p>
+<ol>
+<li>模板类型参数为T &amp;&amp;时，如果传递右值int，那么T被推断为int，如果传递左值int，那么T被推断为int &amp;；</li>
+<li>如果间接创建了引用的引用，那么这些引用发生了折叠，折叠规则为：<ul>
+<li>T&amp; &amp;，T&amp; &amp;&amp;，T&amp;&amp; &amp;均折叠成T &amp;</li>
+<li>T&amp;&amp; &amp;&amp;折叠成T &amp;&amp;</li>
+</ul>
+</li>
+</ol>
+<h1 id="auto和decltype的区别"><a href="#auto和decltype的区别" class="headerlink" title="auto和decltype的区别"></a>auto和decltype的区别</h1><p>auto通过表达式的<strong>值</strong>推断待定义变量类型，decltype通过表达式的<strong>类型</strong>推断待定义变量的类型。</p>
+<ol>
+<li>decltype处理的表达式是单纯的变量时，会保留”顶层const“和”引用“，这点和auto相反；</li>
+<li>处理不是单纯变量时，decltype返回表达式结果对应的类型，此时需要考虑结果的左值和右值的区分，左值时类型带引用，右值时类型不带引用。<br>例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const int ci = 0, &amp;cr = ci;</span><br><span class="line">auto a = cr; // a类型为int</span><br><span class="line">const auto b = cr; // b类型为const int</span><br><span class="line">auto &amp;c = cr; // c类型为const int &amp;</span><br><span class="line">const auto &amp;d = 100; // d类型为const int &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int i, &amp;r = i, *p = &amp;i;</span><br><span class="line">decltype(i) x = 0; // x类型int</span><br><span class="line">decltype(r) y = x; // y类型int &amp;</span><br><span class="line">decltype(r + 0) z; // z类型int，因为算术的结果为右值</span><br><span class="line">decltype(*p) w = r; // w类型int &amp;，因为解引用的结果为左值</span><br><span class="line">decltype(i) s = r; // s类型int，因为i为变量</span><br><span class="line">decltype((i)) t = r; // t类型int &amp;，因为(i)为表达式，结果为左值</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>注意：</p>
+<ol>
+<li>如果一个对象是左值时，我们用的是对象的<strong>内存位置</strong>；如果一个对象是右值时，我们用的是对象的<strong>值（内容）</strong>。</li>
+<li>重要原则：右值可以用的地方，左值也可以用，此时用的是左值的内容，而不是位置。</li>
+<li>引用从来都是作为所引用对象的同义词出现，只有decltype处是例外。</li>
+<li>decltype(r)返回r的类型。</li>
+<li>decltype((r))返回int &amp;型，不管r是int型还是int &amp;型。</li>
+<li>decltype(r + 0)返回int型，不管r是int型还是int &amp;型。</li>
+</ol>
 
     </div>
 
@@ -374,8 +386,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/20191025hexo%E7%AE%80%E4%BB%8B/" rel="next" title="hexo简介">
-                  <i class="fa fa-chevron-left"></i> hexo简介
+                <a href="/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/" rel="next" title="嵌套宏">
+                  <i class="fa fa-chevron-left"></i> 嵌套宏
                 </a>
               
             </div>
@@ -384,8 +396,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="C++知识点">
-                  C++知识点 <i class="fa fa-chevron-right"></i>
+                <a href="/20191029Cpp%E9%BB%91%E7%9B%92%E5%AD%90/" rel="prev" title="C++黑盒子">
+                  C++黑盒子 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -435,6 +447,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#左值和右值"><span class="nav-number">1.</span> <span class="nav-text">左值和右值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#auto和decltype的区别"><span class="nav-number">2.</span> <span class="nav-text">auto和decltype的区别</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -655,7 +669,7 @@
       repo: 'gitalk-comments',
       owner: 'warmyouth',
       admin: ['warmyouth'],
-      id: '38cc8352a9325856259b9c557c5e84f8',
+      id: '4c80878aaa393dc7a3951978ac58a5fc',
         language: window.navigator.language || window.navigator.userLanguage,
       
       distractionFreeMode: 'true'

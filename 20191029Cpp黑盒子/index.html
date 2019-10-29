@@ -55,17 +55,17 @@
   };
 </script>
 
-  <meta name="description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+  <meta name="description" content="initializer_list的实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859namespace std&amp;#123;  &#x2F;&#x2F;&#x2F; initializer_list  template&amp;lt;class _E&amp;gt;    c">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="嵌套宏">
-<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;20191025%E5%B5%8C%E5%A5%97%E5%AE%8F&#x2F;index.html">
+<meta property="og:title" content="C++黑盒子">
+<meta property="og:url" content="https:&#x2F;&#x2F;blog.liveyu.wang&#x2F;20191029Cpp%E9%BB%91%E7%9B%92%E5%AD%90&#x2F;index.html">
 <meta property="og:site_name" content="warmyouth blog">
-<meta property="og:description" content="在某些头文件上看到了宏的以下用法： 123#define STRINGIZE2(x) #x#define STRINGIZE(x) STRINGIZE2(x)#define FILE_LINE &amp;quot;&#x2F;&amp;quot; __FILE__ &amp;quot;:&amp;quot; STRINGIZE(__LINE__) 这涉及到了C对于宏的一些规定。 由于STRINGIZE和__LINE__都是宏定义，STRI">
+<meta property="og:description" content="initializer_list的实现1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859namespace std&amp;#123;  &#x2F;&#x2F;&#x2F; initializer_list  template&amp;lt;class _E&amp;gt;    c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-26T16:19:12.819Z">
+<meta property="og:updated_time" content="2019-10-29T13:27:30.585Z">
 <meta name="twitter:card" content="summary">
-  <link rel="canonical" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+  <link rel="canonical" href="https://blog.liveyu.wang/20191029Cpp%E9%BB%91%E7%9B%92%E5%AD%90/">
 
 
 <script id="page-configurations">
@@ -79,7 +79,7 @@
   };
 </script>
 
-  <title>嵌套宏 | warmyouth blog</title>
+  <title>C++黑盒子 | warmyouth blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150932253-1"></script>
     <script>
@@ -271,7 +271,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191025%E5%B5%8C%E5%A5%97%E5%AE%8F/">
+    <link itemprop="mainEntityOfPage" href="https://blog.liveyu.wang/20191029Cpp%E9%BB%91%E7%9B%92%E5%AD%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="warmyouth">
@@ -285,7 +285,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            嵌套宏
+            C++黑盒子
             
 
           
@@ -302,19 +302,11 @@
                 
               
 
-              <time title="Created: 2019-10-25 21:40:52" itemprop="dateCreated datePublished" datetime="2019-10-25T21:40:52+08:00">2019-10-25</time>
+              <time title="Created: 2019-10-29 20:52:14 / Modified: 21:27:30" itemprop="dateCreated datePublished" datetime="2019-10-29T20:52:14+08:00">2019-10-29</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-27 00:19:12" itemprop="dateModified" datetime="2019-10-27T00:19:12+08:00">2019-10-27</time>
-              </span>
             
           
 
@@ -329,26 +321,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>在某些头文件上看到了宏的以下用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define STRINGIZE2(x) #x</span><br><span class="line">#define STRINGIZE(x) STRINGIZE2(x)</span><br><span class="line">#define FILE_LINE &quot;/&quot; __FILE__ &quot;:&quot; STRINGIZE(__LINE__)</span><br></pre></td></tr></table></figure>
-<p>这涉及到了C对于宏的一些规定。</p>
-<p>由于<code>STRINGIZE</code>和<code>__LINE__</code>都是宏定义，<code>STRINGIZE(__LINE__)</code>就相当于嵌套宏。<br>嵌套宏类似于复合函数。复合函数的执行顺序是定义好的，程序语言和数学语言上表现一致，都是由内向外计算。<br>但嵌套宏的内外替换可以有先后顺序，C对嵌套宏的定义规则为：</p>
+        <h1 id="initializer-list的实现"><a href="#initializer-list的实现" class="headerlink" title="initializer_list的实现"></a>initializer_list的实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">namespace std</span><br><span class="line">&#123;</span><br><span class="line">  /// initializer_list</span><br><span class="line">  template&lt;class _E&gt;</span><br><span class="line">    class initializer_list</span><br><span class="line">    &#123;</span><br><span class="line">    public:</span><br><span class="line">      typedef _E 		value_type;</span><br><span class="line">      typedef const _E&amp; 	reference;</span><br><span class="line">      typedef const _E&amp; 	const_reference;</span><br><span class="line">      typedef size_t 		size_type;</span><br><span class="line">      typedef const _E* 	iterator;</span><br><span class="line">      typedef const _E* 	const_iterator;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">      iterator			_M_array;</span><br><span class="line">      size_type			_M_len;</span><br><span class="line"></span><br><span class="line">      // The compiler can call a private constructor.</span><br><span class="line">      constexpr initializer_list(const_iterator __a, size_type __l)</span><br><span class="line">      : _M_array(__a), _M_len(__l) &#123; &#125;</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">      constexpr initializer_list() noexcept</span><br><span class="line">      : _M_array(0), _M_len(0) &#123; &#125;</span><br><span class="line"></span><br><span class="line">      // Number of elements.</span><br><span class="line">      constexpr size_type</span><br><span class="line">      size() const noexcept &#123; return _M_len; &#125;</span><br><span class="line"></span><br><span class="line">      // First element.</span><br><span class="line">      constexpr const_iterator</span><br><span class="line">      begin() const noexcept &#123; return _M_array; &#125;</span><br><span class="line"></span><br><span class="line">      // One past the last element.</span><br><span class="line">      constexpr const_iterator</span><br><span class="line">      end() const noexcept &#123; return begin() + size(); &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   *  @brief  Return an iterator pointing to the first element of</span><br><span class="line">   *          the initializer_list.</span><br><span class="line">   *  @param  __ils  Initializer list.</span><br><span class="line">   */</span><br><span class="line">  template&lt;class _Tp&gt;</span><br><span class="line">    constexpr const _Tp*</span><br><span class="line">    begin(initializer_list&lt;_Tp&gt; __ils) noexcept</span><br><span class="line">    &#123; return __ils.begin(); &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   *  @brief  Return an iterator pointing to one past the last element</span><br><span class="line">   *          of the initializer_list.</span><br><span class="line">   *  @param  __ils  Initializer list.</span><br><span class="line">   */</span><br><span class="line">  template&lt;class _Tp&gt;</span><br><span class="line">    constexpr const _Tp*</span><br><span class="line">    end(initializer_list&lt;_Tp&gt; __ils) noexcept</span><br><span class="line">    &#123; return __ils.end(); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，initializer_list只有一个ctor，即initializer_list()。有两个问题：</p>
 <ol>
-<li>总体而言，嵌套宏由内向外进行替换，即先展开宏参数（内部宏），再以递归的方式检查和替换已经展开的结果；</li>
-<li>但如果在展开宏参数的过程中，发现某个宏参数遇到了#或##，那么就不再展开这个宏参数，而是直接应用#或##，没遇到#或##的宏参数仍旧按照规则1处理。</li>
+<li>initializer_list如何转化类似{1,2,3,4}这样的初始化列表？</li>
+<li>private的ctor有什么用，“The compiler can call a private constructor”有什么含义？<br>答案见[链接]](<a href="https://stackoverflow.com/questions/29200036/is-providing-a-private-constructor-for-initializer-list-conforming)。" target="_blank" rel="noopener">https://stackoverflow.com/questions/29200036/is-providing-a-private-constructor-for-initializer-list-conforming)。</a><br>内有回答：<blockquote>
+<p>This draft standard shows the synopsis for initializer_list.<br>According to the synopsis the template only contains a default constructor, allowing you to create empty initializer_lists, which is clearly not very useful.<br>However, initializer_list<T> is a type that depends on some magic being done by the compiler.<br>By magic, I’m referring to §8.5.4/5 that you’ve quoted. This allows the following statement to be legal and compile.<br><code>std::initializer_list&lt;int&gt; numbers{1, 2, 3, 4}; // no such constructor in the synopsis</code><br>Here, as explained in §8.5.4/5, the compiler will create an array containing the four integers,<br>and then initialize the initializer_list<int> instance with either a pair of pointers (first element and one past the end element) or a pointer and length (which is what both libstdc++ and libc++ seem to do).<br>Once the instance has been created, your code is allowed to access all the member functions listed in the synopsis.<br>The standard defines what you’d expect when constructing a std::initializer_list<T> from an initializer list.<br>The way it’s done is implementation-defined and, for what said above, it may therefore call a private constructor.</p>
+</blockquote>
+</li>
 </ol>
-<p>即，When macro arguments are substituted into the macro body, they are expanded unless they appear with the # or ## preprocessor operators in that macro.</p>
-<p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">TEST(Draft, Macro1) &#123;</span><br><span class="line">  #define f(a) (#a)</span><br><span class="line">  #define g()  1000</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;f(g()) macro: &quot; &lt;&lt; f(g());</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void call(const string &amp;j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 1: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">static void call(int j, int k) &#123;</span><br><span class="line">  LOG(WARNING) &lt;&lt; &quot;version 2: &quot; &lt;&lt; j &lt;&lt; &quot; &quot; &lt;&lt; k;</span><br><span class="line">&#125;</span><br><span class="line">TEST(Draft, Macro2) &#123;</span><br><span class="line">  #define f(a, b) a##b</span><br><span class="line">  #define g(a) #a, f(a, 0)</span><br><span class="line">  #define h(a) func_##a, f(a, 0)</span><br><span class="line">  #define e(a) a</span><br><span class="line">  const auto func_e = [](int i) -&gt; int &#123;</span><br><span class="line">    LOG(INFO) &lt;&lt; &quot;func_e: i = &quot; &lt;&lt; i;</span><br><span class="line">    return i*i;</span><br><span class="line">  &#125;;</span><br><span class="line">  call(g(e(3)));</span><br><span class="line">  call(h(e(3)));</span><br><span class="line">  #undef f</span><br><span class="line">  #undef g</span><br><span class="line">  #undef h</span><br><span class="line">  #undef e</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[ RUN      ] Draft.Macro1</span><br><span class="line">W1026 23:46:21.270776  6529 test_draft.cpp:13] f(g()) macro: g()</span><br><span class="line">[       OK ] Draft.Macro1 (0 ms)</span><br><span class="line">[ RUN      ] Draft.Macro2</span><br><span class="line">W1026 23:46:21.270790  6529 test_draft.cpp:19] version 1: e(3) 30</span><br><span class="line">I1026 23:46:21.270797  6529 test_draft.cpp:30] func_e: i = 3</span><br><span class="line">W1026 23:46:21.270800  6529 test_draft.cpp:22] version 2: 9 30</span><br><span class="line">[       OK ] Draft.Macro2 (0 ms)</span><br></pre></td></tr></table></figure>
-<p>分析：<br>Macro1例子：<br>f(g())中f是宏定义，但f定义中有#，所以不展开#对应的参数，即<br><code>f(g()) -&gt; #g() -&gt; &quot;g()&quot;</code><br>Macro2例子：<br>g(e(3))中g是宏定义，但g定义中有#，所以不展开#对应的参数，即<br><code>g(e(3)) -&gt; #e(3), f(3, 0) -&gt; &quot;e(3)&quot;, 30</code><br>于是传入call得到call(“e(3)”, 30)。<br>h(e(3))中h是宏定义，但h定义中有##，所以不展开##对应的参数，即<br><code>h(e(3)) -&gt; func_##e(3), f(3, 0) -&gt; func_e(3), 30</code><br>于是传入call得到call(func_e(3), 30)。</p>
-<p><strong>重要</strong><br>可以用<code>gcc -E test.cpp</code>查看经过宏替换之后的源代码。比如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define f(a, b) a##b</span><br><span class="line">#define g(a, b) 1##a + f(b, 0)</span><br><span class="line">#define c       4</span><br><span class="line">#define d       8</span><br><span class="line">g(c, d)</span><br></pre></td></tr></table></figure>
-<p>经过<code>gcc -E test_draft.cpp</code>得到了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"># 1 &quot;&lt;built-in&gt;&quot;</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot;</span><br><span class="line"># 1 &quot;/usr/include/stdc-predef.h&quot; 1 3 4</span><br><span class="line"># 1 &quot;&lt;command-line&gt;&quot; 2</span><br><span class="line"># 1 &quot;test_draft.cpp&quot;</span><br><span class="line"></span><br><span class="line">1c + 80</span><br></pre></td></tr></table></figure>
-<p>可见过程为<br><code>g(c, d) -&gt; 1##c + f(8, 0) -&gt; 1c + 80</code><br><del>而不是<br><code>g(c, d) -&gt; 1##c + d##0 -&gt; 1c + d0</code></del></p>
-<p><a href="https://www.jianshu.com/p/4a1531bac39f" target="_blank" rel="noopener">相关参考</a></p>
+<p>Indeed §17.6.5.5 (draft n° 3797) states:<br>A call to a member function signature described in the C ++ standard library behaves as if the implementation declares no additional member function signatures.</p>
+<p>Footnote 189:<br>189) A valid C++ program always calls the expected library member function, or one with equivalent behavior. An implementation may also define additional member functions that would otherwise not be called by a valid C++ program.</p>
+<p>即，为了实现initilizer_list，编译器做了一些额外的工作，单纯从initilizer_list的源码中是分析不出来的。<br>编译器在解析到initilizer_list变量时，会调用某些内置功能，将初始化列表赋值给该变量。</p>
 
     </div>
 
@@ -374,8 +358,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/20191025hexo%E7%AE%80%E4%BB%8B/" rel="next" title="hexo简介">
-                  <i class="fa fa-chevron-left"></i> hexo简介
+                <a href="/20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="next" title="C++知识点">
+                  <i class="fa fa-chevron-left"></i> C++知识点
                 </a>
               
             </div>
@@ -383,10 +367,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/20191029Cpp%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="C++知识点">
-                  C++知识点 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -435,6 +415,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#initializer-list的实现"><span class="nav-number">1.</span> <span class="nav-text">initializer_list的实现</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -655,7 +637,7 @@
       repo: 'gitalk-comments',
       owner: 'warmyouth',
       admin: ['warmyouth'],
-      id: '38cc8352a9325856259b9c557c5e84f8',
+      id: '5c9cd7811dc55970e169f76fb9ff3ec6',
         language: window.navigator.language || window.navigator.userLanguage,
       
       distractionFreeMode: 'true'
